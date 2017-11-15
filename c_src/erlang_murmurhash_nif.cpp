@@ -114,20 +114,20 @@ ERL_NIF_TERM
 erlang_murmurhash2_2_impl(ErlNifEnv* env, int, const ERL_NIF_TERM argv[])
 {
     ErlNifBinary bin;
-    unsigned int h;
-    unsigned int seed;
+    signed int h;
+    signed int seed;
 
     if (!check_and_unpack_data(env, argv[0], &bin)) {
         return enif_make_badarg(env);
     }
 
-    if (!enif_get_uint(env, argv[1], &seed)) {
+    if (!enif_get_int(env, argv[1], &seed)) {
         return enif_make_badarg(env);
     }
 
     h = MurmurHash2(bin.data, bin.size, seed);
 
-    return enif_make_uint(env, h);
+    return enif_make_int(env, h);
 }
 
 ERL_NIF_TERM
